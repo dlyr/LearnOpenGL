@@ -70,23 +70,25 @@ elseif(UNIX)
   #list(APPEND LIBS ${RT_LIB})
   # append non-native packages
 
-
-
   # note that the order is important for setting the libs
   # use pkg-config --libs $(pkg-config --print-requires --print-requires-private glfw3) in a terminal to confirm
  # set(LIBS ${GLFW3_LIBRARY} X11 Xrandr Xinerama Xi Xxf86vm Xcursor GL dl pthread GLEW SOIL assimp)
-elseif(APPLE)
+endif(WIN32)
+
+if(APPLE)
   INCLUDE_DIRECTORIES(/System/Library/Frameworks)
   FIND_LIBRARY(COCOA_LIBRARY Cocoa)
   FIND_LIBRARY(OpenGL_LIBRARY OpenGL)
   FIND_LIBRARY(IOKit_LIBRARY IOKit)
   MARK_AS_ADVANCED(COCOA_LIBRARY OpenGL_LIBRARY)
   SET(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY})
-  SET(APPLE_LIBS ${APPLE_LIBS} /usr/local/lib/libglfw.a)
+ # SET(APPLE_LIBS ${APPLE_LIBS} /usr/local/lib/libglfw.a)
+  FIND_LIBRARY(CoreVideo_LIBRARY CoreVideo)
+  SET(APPLE_LIBS ${Cocoa_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
   set(LIBS ${LIBS} ${APPLE_LIBS})
 else()
   set(LIBS )
-endif(WIN32)
+endif(APPLE)
 
 set(CHAPTERS
     1.getting_started
