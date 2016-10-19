@@ -52,7 +52,7 @@ include_directories(SYSTEM external/SOIL/src)
 
 if(WIN32)
   set(LIBS glfw3 opengl32 glew32s SOIL assimp)
-elseif(UNIX)
+elseif(UNIX AND NOT APPLE)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
   # Linux packages native to CMake
   set(LIBS glfw)
@@ -85,6 +85,7 @@ if(APPLE)
  # SET(APPLE_LIBS ${APPLE_LIBS} /usr/local/lib/libglfw.a)
   FIND_LIBRARY(CoreVideo_LIBRARY CoreVideo)
   SET(APPLE_LIBS ${Cocoa_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
+#  SET(APPLE_LIBS ${APPLE_LIBS} glfw3 GLEW assimp SOIL)
   set(LIBS ${LIBS} ${APPLE_LIBS})
 else()
   set(LIBS )
@@ -96,6 +97,7 @@ set(CHAPTERS
     3.model_loading
     4.advanced_opengl
     5.advanced_lighting
+    6.in_practice
 )
 
 set(1.getting_started   
@@ -147,6 +149,12 @@ set(5.advanced_lighting
     8.deferred_shading
     9.ssao
 )
+
+set(6.in_practice
+    1.debugging
+    # 2.text_rendering
+)
+
 
 
 configure_file(configuration/root_directory.h.in configuration/root_directory.h)
