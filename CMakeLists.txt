@@ -73,9 +73,7 @@ elseif(UNIX AND NOT APPLE)
   # note that the order is important for setting the libs
   # use pkg-config --libs $(pkg-config --print-requires --print-requires-private glfw3) in a terminal to confirm
  # set(LIBS ${GLFW3_LIBRARY} X11 Xrandr Xinerama Xi Xxf86vm Xcursor GL dl pthread GLEW SOIL assimp)
-endif(WIN32)
-
-if(APPLE)
+elseif(APPLE)
   INCLUDE_DIRECTORIES(/System/Library/Frameworks)
   FIND_LIBRARY(COCOA_LIBRARY Cocoa)
   FIND_LIBRARY(OpenGL_LIBRARY OpenGL)
@@ -89,7 +87,8 @@ if(APPLE)
   set(LIBS ${LIBS} ${APPLE_LIBS})
 else()
   set(LIBS )
-endif(APPLE)
+  message(WARNING architecture not supported)
+endif(WIN32)
 
 set(CHAPTERS
     1.getting_started
